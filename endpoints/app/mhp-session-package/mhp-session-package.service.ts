@@ -12,7 +12,7 @@ import { MENTAL_HEALTH_PROFESSIONAL_USER } from './../constants/table-aliases';
 
 import { CreateMhpSessionPackageDto } from './dto/create-mhp-session-package.dto';
 import { GetMhpSessionPackageResponseDto } from './dto/get-mhp-session-package-response.dto';
-import { GetMhpSessionPackageDto } from './dto/get-session-package-availed.dto';
+import { GetMhpSessionPackageDto } from './dto/get-mhp-session-package.dto';
 import { UpdateMhpSessionPackageDto } from './dto/update-mhp-session-package.dto';
 import { MhpSessionPackage } from './entities/mhp-session-package.entity';
 
@@ -34,6 +34,7 @@ export class MhpSessionPackageService extends TypeOrmQueryService<MhpSessionPack
       mental_health_professional: { id: createMhpSessionPackageDto.mental_health_professional_id },
       session_package: { id: createMhpSessionPackageDto.session_package_id },
     });
+    console.log('Create Services: ', createMhpSessionPackageDto);
 
     return this.mhpSessionPackageRepository.save(mhpSessionPackage);
   }
@@ -97,11 +98,9 @@ export class MhpSessionPackageService extends TypeOrmQueryService<MhpSessionPack
   }
 
   async updateMhpSessionPackageDetails(
-    id: string,
     updateMhpSessionPackageDto: UpdateMhpSessionPackageDto
   ): Promise<MhpSessionPackage> {
     const existingPackage = await this.mhpSessionPackageRepository.preload({
-      id: id,
       ...updateMhpSessionPackageDto
     });
 

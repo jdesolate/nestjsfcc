@@ -8,7 +8,7 @@ import { RolesGuard } from '../roles/roles.guard';
 import { CreateMhpSessionPackageDto } from './dto/create-mhp-session-package.dto';
 import { DeleteMhpSessionPackageResponseDto } from './dto/delete-mhp-session-package.dto';
 import { GetMhpSessionPackageResponseDto } from './dto/get-mhp-session-package-response.dto';
-import { GetMhpSessionPackageDto } from './dto/get-session-package-availed.dto';
+import { GetMhpSessionPackageDto } from './dto/get-mhp-session-package.dto';
 import { UpdateMhpSessionPackageDto } from './dto/update-mhp-session-package.dto';
 import { MhpSessionPackage } from './entities/mhp-session-package.entity';
 import { MhpSessionPackageService } from './mhp-session-package.service';
@@ -24,6 +24,8 @@ export class MhpSessionPackageController {
   async createMhpSessionPackage(
     @Body() createMhpSessionPackageDto: CreateMhpSessionPackageDto
   ): Promise<MhpSessionPackage> {
+    console.log('Create Controller: ', createMhpSessionPackageDto);
+
     return this.mhpSessionPackageService.create(
       createMhpSessionPackageDto
     );
@@ -57,9 +59,9 @@ export class MhpSessionPackageController {
   @UseGuards(RolesGuard)
   @Roles(Role.MHP)
   @Patch('/:id')
-  async updateMhpSessionPackageDetails(@Param('id') id: string,
-  @Body() updateMhpSessionPackageDto: UpdateMhpSessionPackageDto): Promise<MhpSessionPackage> {
-    return this.mhpSessionPackageService.updateMhpSessionPackageDetails(id, updateMhpSessionPackageDto);
+  async updateMhpSessionPackageDetails(
+    @Body() updateMhpSessionPackageDto: UpdateMhpSessionPackageDto): Promise<MhpSessionPackage> {
+    return this.mhpSessionPackageService.updateMhpSessionPackageDetails(updateMhpSessionPackageDto);
   }
 
   @UseGuards(RolesGuard)
